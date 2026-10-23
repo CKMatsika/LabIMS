@@ -19,7 +19,7 @@ For a single-process production-style preview, build with `npm run build` and ru
 ## Free demo deployment (Render + Neon)
 
 1. Create a PostgreSQL project on [Neon](https://neon.tech/) and copy its pooled connection string into the Render web service's `DATABASE_URL` variable.
-2. Create a Render Web Service from this GitHub repository and the `main` branch. Use `npm ci && npm run build` as the build command and `npm start` as the start command; select the Free instance for a demo.
+2. Create a Render Web Service from this GitHub repository and the `main` branch. Use `npm ci --include=dev && npm run build` as the build command and `npm start` as the start command; select the Free instance for a demo. The explicit `--include=dev` is needed because TypeScript, Vite, and React type declarations are development dependencies required during the build, even when `NODE_ENV=production` is set.
 3. Set `NODE_ENV` to `production`, `JWT_SECRET` to a long random secret, and `PGSSL` to `true` in Render's service variables. Render provides `PORT`; the server uses it and binds to `0.0.0.0` in production.
 4. Generate a public domain in the Render service's Networking settings. Keep the Neon database private.
 
