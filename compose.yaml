@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: labims-postgres
+    environment:
+      POSTGRES_DB: labims
+      POSTGRES_USER: labims
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-labims_local_dev_only}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - labims-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U labims -d labims"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  labims-postgres-data:

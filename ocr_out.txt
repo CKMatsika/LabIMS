@@ -1,0 +1,487 @@
+PAGE 1
+FOR :: 0.7492839246988297
+THE :: 0.7496287822723389
+BIDDING :: 0.8387049958109856
+DOCUMENT :: 0.7599494324790107
+SUPPLY, :: 0.8430876359343529
+INSTALLATION :: 0.8834580412277808
+AND :: 0.7299214601516724
+ATHWANGEPOWERSTATION :: 0.8818127427782331
+PROCUREMENT REFERENCE NO:ZPC/HO/DOM105/2026 :: 0.878005023707043
+PART2:STATEMENTOFREQUIREMENTS :: 0.9295357823371887
+Delivery Schedule :: 0.8409188058641222
+Name of Bidder: :: 0.8616693653166294
+Bidder's Reference Number: :: 0.9391998251279196
+NotetoBidders:If thedeliveryperiodoffered,or anyotherdetails,differfrom therequirementsbelow,this :: 0.9273217797887569
+should be stated in your tenderj. :: 0.8784821015947005
+Supply, Installation and Commissioning of Laboratory Information Management Systems at :: 0.9475249901585195
+Hwange Power Station :: 0.8979011887595767
+Delivery Date :: 0.8531507679394313
+Bidder's offered :: 0.8502454792751986
+Required by :: 0.8520055909951528
+Delivery period :: 0.916039489209652
+Procuring :: 0.8350844800472259
+OUM :: 0.65047986805439
+Description of Goods :: 0.9045294352940151
+Qty :: 0.6264411509037018
+Entity and :: 0.8240670615976508
+applicable :: 0.8421044783158735
+INCOTERM :: 0.8227895763185289
+DDP Hwange :: 0.870134564963254
+OUM :: 0.7427826523780823
+Qty :: 0.7490076422691345
+Supply, Installation and :: 0.9322447252273559
+Commissioning of Laboratory :: 0.8835147810833794
+Information Management :: 0.8936622013216433
+Work :: 0.7994419813156128
+Systems at Hwange Power :: 0.9382682542006174
+Station :: 0.8282588496804237
+PLACEOFDELIVERY :: 0.9070636853575706
+Zimbabwe Power Company :: 0.9073639330656632
+Hwange Power Station :: 0.8726255467959813
+Old Victoria Falls Road :: 0.9244593605399132
+Hwange. :: 0.7438721209764481
+The delivery period required is measured from the date of the signing of the Contract between the :: 0.9485888243937979
+Procuring Entity and the Bidder. :: 0.9219893650575117
+Page 14 of 29 :: 0.8685031660965511
+---
+PAGE 2
+BIDDING :: 0.8538918942213058
+DOCUMENT :: 0.7694837318526374
+FOR :: 0.7496318519115448
+THE :: 0.7496120035648346
+SUPPLY, :: 0.8650614246726036
+INSTALLATION :: 0.8926969170570374
+AND :: 0.7484274953603745
+ATHWANGE POWER STATION :: 0.8848553947780443
+PROCUREMENTREFERENCE NO:ZPC/HO/DOM 105/2026 :: 0.9100508242845535
+PART 2: STATEMENT OF REQUIREMENTS :: 0.8993507798980264
+Technical Specification and Compliance Sheet :: 0.9298203322622511
+Name of Bidder: :: 0.8778947591781616
+Bidder's Reference Number: :: 0.9429974776727182
+The Goods and Related Services must comply with following Technical Specifications and Standards: :: 0.920384348959339
+[Columns a and b are completed by the Procuring Entity. Column c must be completed by the Bidder :: 0.9308548293162867
+to indicate the full specification of the items offered and their compliance with the specification :: 0.9161834958195686
+required (in Column b) :: 0.8807237537010856
+Supply, Installation and Commissioning of Laboratory Information Management Systems at :: 0.9000047099316257
+Hwange Power Station :: 0.8911673256329128
+Item description and full :: 0.9084965265714205
+Item description and full technical Specification required :: 0.9080215621802766
+Item No :: 0.684232197701931
+technical Specification :: 0.9329215437173843
+(including applicable standards) :: 0.8983318299958201
+(Bidder's Offer) :: 0.8832763573702644
+1. :: 0.5925556023915609
+SUPPLY,INSTALLATIONANDCOMMISSIONING :: 0.9048237088653777
+OF LABORATORY INFORMATION :: 0.9117247118399694
+MANAGEMENT SYSTEMATHWANGEPOWER :: 0.8563495739813773
+STATION :: 0.794346421957016
+1.0 :: 0.6259009838104248
+FUNCTIONAL REQUIREMENTS :: 0.8826304748654366
+The proposed LIMS shall provide the following core :: 0.9270595247839012
+functionalities: :: 0.925076986060423
+1.1 :: 0.6422707885503769
+Sample Management :: 0.8466521932019128
+1.1.1 :: 0.8319890201091766
+Sample Registration: Ability to register samples :: 0.9212789705821446
+manually or via barcode scanners including pre- :: 0.9216550327837467
+defined templates for routine samples (e.g., "Boiler :: 0.9299389849293906
+Feedwater", "4A Coal Feeder", "Unit 2 Transformer :: 0.9135316359996796
+Oil"). :: 0.7633664011955261
+1.1.2 :: 0.8330227931340536
+Sample Tracking: Real-time tracking of sample :: 0.8963208166153535
+status (Received, In-Progress, Approved, Rejected). :: 0.9065531068123304
+1.1.3 :: 0.8330619037151337
+Chain of Custody: Electronic audit trail capturing :: 0.8998680991284987
+user ID, timestamp, and actions taken on a sample. :: 0.8810005836627063
+1.2 :: 0.7291037887334824
+Test Management & Data Entry :: 0.8940404612442543
+1.2.1 :: 0.7875436047712961
+Configurable Test Methods: The system must allow :: 0.9125811530619251
+configuration of test methods based on station :: 0.9322249077736063
+standards (e.g., ASTM, ISO, site standard :: 0.8814675240289598
+procedures, local codes). :: 0.8735542641236231
+1.2.2 :: 0.7477915386358897
+Manual Entry: User-friendly interface for manual :: 0.9326587246388806
+input of titration results, pH, conductivity, etc. :: 0.9444316076297387
+1.2.3 :: 0.7761615912119547
+Instrument Integration (Auto-Capture): (Mandatory) :: 0.9526711445228726
+The system must integrate directly with key :: 0.9124578840353272
+Page 15 of 29 :: 0.8960046640464238
+---
+PAGE 3
+BIDDING :: 0.8550682291388512
+FOR :: 0.7492805421352386
+THE :: 0.7492939084768295
+INSTALLATION :: 0.8940046108686007
+SUPPLY, :: 0.8205707371234894
+DOCUMENT :: 0.8784429033597311
+AND :: 0.7475444227457047
+ATHWANGE POWER STATION :: 0.8930963122326395
+PROCUREMENTREFERENCE NO:ZPC/HO/DOM 105/2026 :: 0.9371361082250421
+PART 2: STATEMENT OF REQUIREMENTS :: 0.8822640390957103
+laboratory instruments (e.g., Bomb Calorimeters, :: 0.902794606831609
+CHN Analyzers, ICP-OES, Ion Chromatographs) :: 0.9370208355513486
+via RS232, USB, or TCP/IP to eliminate :: 0.9606761397459568
+transcription errors. :: 0.9099570214748383
+1.3 :: 0.6097483932971954
+Calculations & Logic :: 0.9200283998534793
+1.3.1 :: 0.7945013542970022
+Auto-Calculation: The system must calculate :: 0.922980782660571
+derived parameters (e.g., Coal Reactivity, Specific :: 0.9186006623965043
+Conductivity, Alkalinity ratios, Calorific Value :: 0.9417704745214812
+corrections) based on raw inputs. :: 0.8998654923018288
+1.3.2 :: 0.833003987868627
+Limit Checking: Automatic comparison of results :: 0.9226736376682917
+against pre-defined specification limits :: 0.947971406506329
+(Target/Action Levels). :: 0.84881358842055
+Example: :: 0.877561542722914
+If Boiler pH < 9.0, the system shall flag :: 0.9156323742298853
+the result in Red. :: 0.8833104748474924
+If Boiler Silica is > 0.27, the system :: 0.9272381495206784
+shall generate a blowdown instruction :: 0.8665376164411244
+1.3.3 :: 0.7676458954811096
+Rounding Rules: Configurable rounding logic as :: 0.9337818001178985
+per station reporting standards. :: 0.9128638397563588
+1.4 :: 0.6834619343280792
+Specific Module Requirements :: 0.9074226371173201
+1.4.1 :: 0.7225060363610586
+Water Chemistry Module: :: 0.933559869726499
+Support for pH, Conductivity, Silica, Dissolved :: 0.9280424763758978
+Oxygen, Sodium, Iron, Copper, Cation :: 0.9211367868088387
+Conductivity Hydrazine, and Ammonia. :: 0.9248922757200293
+Trending capabilities for test parameter vs time eg :: 0.9168452391257653
+"Cation Conductivity" vs. "Time". :: 0.924611855079146
+1.4.2 :: 0.7696002125740051
+Coal/Combustion Module: :: 0.8886656438310941
+Management of Proximate Analysis (Moisture, Ash, :: 0.9340772519306261
+Volatile Matter) and Ultimate Analysis (C, H, N, S, :: 0.959600303035516
+0). :: 0.7226193994283676
+Calculation of boiler efficiency inputs. :: 0.9148965114500465
+Generation of incoming coal acceptance/rejection :: 0.9321454958039888
+certificates :: 0.8717131202037518
+1.4.3Oil & Fuel Module: :: 0.907305933535099
+Tracking of transformer oil quality including :: 0.9377709989962371
+Dissolved Gas Analysis (DGA) trends. :: 0.9461688560408514
+Diesel and Heavy Fuel Oil specification :: 0.9321383811533451
+management. :: 0.8616486390431722
+1.4.4Gas Module: :: 0.8811517112395343
+Tracking of Hydrogen Purity (%) and Hydrogen :: 0.90074286725786
+Dew Point (°C) with trend plotting as per recent :: 0.9459554005642327
+operational reports. :: 0.8903445913678124
+1.4.5Reporting & Dashboards :: 0.9053082828010831
+Page 16 of 29 :: 0.8725140307630811
+---
+PAGE 4
+FOR :: 0.7496917843818665
+THE :: 0.7495822608470917
+BIDDING :: 0.8583553433418274
+DOCUMENT :: 0.767432451248169
+SUPPLY, :: 0.8279153406620026
+INSTALLATION :: 0.8798631704770602
+AND :: 0.7403035759925842
+AT HWANGE POWER STATION :: 0.8780710572997729
+PROCUREMENTREFERENCE NO:ZPC/HO/DOM 105/2026 :: 0.9100508242845535
+PART 2: STATEMENT OF REQUIREMENTS :: 0.9028233640334186
+Standard Reports: Shift logs, Daily Chemistry Reports, :: 0.9113944693045183
+Monthly Compliance Reports. :: 0.8954699805804661
+Certificates of Analysis (COA): Auto-generation of COAs :: 0.9426432507378715
+for dispatch to the Station Management or Regulatory :: 0.9546101093292236
+Bodies. :: 0.7841637507081032
+Management Dashboard: Visual KPIs showing compliance :: 0.9131404611299623
+rates (e.g., % time pH within limits). :: 0.8728411885408255
+2. TECHNICAL ARCHITECTURE & :: 0.8781808359282357
+INTEGRATION :: 0.8627881159385046
+2.1 :: 0.7390468716621399
+Architecture :: 0.8368742328423721
+2.1.1 :: 0.6703060269355774
+Architecture: Client-Server or Web-Based :: 0.9135756434463873
+(preferred). If web-based, must support secure :: 0.9298245691238566
+intranet deployment. :: 0.9340201360838754
+2.1.2 :: 0.7899439632892609
+Database: Industry standard Relational Database :: 0.8737196053067843
+Management System (RDBMS) e.g., Microsoft :: 0.9282276871658507
+SQL Server or Oracle. :: 0.8840899900956587
+2.1.3Operating System: Compatible with Windows :: 0.9260276670151568
+Server 2019/2022 and Windows 10/11 clients. :: 0.8923211639577692
+2.2 Integration (Critical Requirement) :: 0.8937746362808423
+2.2.1 :: 0.7317338486512502
+DCS/Historian Interface: The LIMS must have :: 0.9282292479818518
+drivers or API capability to fetch/process data from :: 0.9112537300811624
+the plant DCS or Historian (e.g., OSIsoft PI System, :: 0.9300678968429565
+Siemens PCS7). :: 0.9293530662854512
+2.2.2 :: 0.7138432463010153
+Use Case: Fetching continuous online :: 0.8829638216946576
+pH/Conductivity values to correlate with lab grab :: 0.9233513021469116
+samples. :: 0.8628986477851868
+2.2.3 :: 0.6702906986077627
+ERP Integration: Capability to export data to the :: 0.927445594072342
+station's ERP system for inventory management of :: 0.926842060016126
+chemicals. :: 0.8626922748305581
+2.3 :: 0.7461207062005997
+Security & Compliance :: 0.8759531866420399
+2.3.1 :: 0.7913941641648611
+ISO 17025 Compliance: The system must support :: 0.9279262306897537
+21 CFR Part 11 equivalent electronic signature :: 0.8961508946215853
+capabilities. :: 0.8471054860523769
+2.3.2 :: 0.8135267198085785
+User Access Control: Role-Based Access Control :: 0.9006410824491623
+(RBAC) defining privileges for: :: 0.8720915652811527
+Lab Technician (Data Entry) :: 0.8909136525222233
+Lab Supervisor (Approval) :: 0.9187882221662081
+Station Chemist/Head Chemical Services :: 0.9009630970465832
+(Admin/Configuration) :: 0.89727506312457
+Plant Management (Read-only/Reports). :: 0.9420603952909771
+Page 17 of 29 :: 0.8796593461717878
+---
+PAGE 5
+BIDDING :: 0.8248786255717278
+DOCUMENT :: 0.7730599376890395
+FOR :: 0.7495388239622116
+THE :: 0.7496287822723389
+SUPPLY, :: 0.8670947328209877
+INSTALLATION :: 0.8946329401089594
+AND :: 0.7486590892076492
+ATHWANGE POWER STATION :: 0.8919443462205969
+PROCUREMENTREFERENCE NO:ZPC/HO/DOM 105/2026 :: 0.9371361082250421
+PART2:STATEMENTOFREQUIREMENTS :: 0.8935780008633931
+2.3.3Audit Trail: Immutable audit trails for any creation, :: 0.8954983530408245
+modification, or deletion of data. :: 0.8854468396731785
+2.4 Integration (Critical Requirement) :: 0.918567357919155
+2.4.1 :: 0.8295335570971171
+DCS/Historian Interface: The LIMS must have :: 0.9322402328252792
+drivers or API capability to fetch/process data from :: 0.9110602444072939
+the plant DCS or Historian (e.g., OSIsoft PI System, :: 0.948207863096921
+Siemens PCS7). :: 0.8773685614267985
+2.4.2 :: 0.528999482591947
+Use Case: Fetching continuous online :: 0.940163562426696
+pH/Conductivity values to correlate with lab grab :: 0.9468445575237274
+samples. :: 0.886438681019677
+2.4.3 :: 0.7914725045363108
+ERP Integration: Capability to export data to the :: 0.905713472366333
+station's ERP system for inventory management of :: 0.9461695442394334
+chemicals. :: 0.8986785303462635
+2.5 :: 0.6202741116285324
+Security & Compliance :: 0.8706500259312716
+2.5.1 :: 0.7731320559978485
+ISO 17025 Compliance: The system must support :: 0.9271714875231618
+21 CFR Part 11 equivalent electronic signature :: 0.9020993849064441
+capabilities. :: 0.899921178817749
+2.5.2 :: 0.8295479516188303
+User Access Control: Role-Based Access Control :: 0.9366773404973618
+(RBAC) defining privileges for: :: 0.919526195153594
+Lab Technician (Data Entry) :: 0.8714279021535601
+Lab Supervisor (Approval) :: 0.9333107884113605
+Station Chemist/Head Chemical Services :: 0.9234868838236883
+(Admin/Configuration) :: 0.8706868507645347
+ Plant Management (Read-only/Reports). :: 0.9408788405931913
+2.5.3Audit Trail: Immutable audit trails for any creation, :: 0.9062666812185514
+modification, or deletion of data. :: 0.8857491169657026
+3.0HARDWARE&SUPPLYREQUIREMENTS :: 0.9090260651803785
+The Vendor shall supply the following hardware (or specify :: 0.934714502197201
+specifications if Client-provided): :: 0.9384220325284534
+3.1 LIMS Server: :: 0.80712209203664
+High-performance rack-mountable server. :: 0.9177377238869667
+Processor: Minimum 2x Intel Xeon Gold (or :: 0.9211818689391726
+equivalent). :: 0.9163702359566321
+RAM: Minimum 64 GB DDR4. :: 0.8828936004638672
+Storage: RAID 5 configuration with minimum :: 0.9283511680225993
+4TB usable storage (SSD/SAS hybrid). :: 0.9245303321529079
+Backup: Tape drive or dedicated NAS :: 0.9228366563717524
+connectivity. :: 0.884525294814791
+3.2 :: 0.6636658608913422
+Client Workstations (x8 minimum): :: 0.9412566668847028
+Page 18 of 29 :: 0.8765361394201007
+---
+PAGE 6
+BIDDING :: 0.8557067736983299
+FOR :: 0.7496318519115448
+THE :: 0.7495822608470917
+DOCUMENT :: 0.7704555855857002
+SUPPLY, :: 0.8275291994214058
+INSTALLATION :: 0.8729839004003085
+AND :: 0.7484274953603745
+AT HWANGE POWER STATION :: 0.880584162970384
+PROCUREMENTREFERENCE NO:ZPC/HO/DOM 105/2026 :: 0.9100508242845535
+PART 2: STATEMENT OF REQUIREMENTS :: 0.9143788814544678
+3.2.1 :: 0.8255752225716909
+Desktop PCs (i7 processor or higher, 16GB RAM) :: 0.9245012098170341
+located in the Chemical Lab, Coal Lab, Foreman :: 0.918797992645426
+Office, Station Chemist Office, Water Treatment :: 0.8855828319986662
+Plant Control Room, Head Chemical Services and :: 0.8848259677278235
+Plant Management. :: 0.8580563730663724
+3.3 Peripherals: :: 0.8969633439007927
+3.3.1 :: 0.6775608758131663
+Barcode Label Printer (Industrial grade for sample :: 0.9366147442191255
+bottles). :: 0.8979886889457702
+3.3.2 :: 0.7376008232434591
+Barcode Scanners (Handheld, wireless). :: 0.9355862140655518
+3.3.3 :: 0.7522447605927786
+Electronic Demo version of the software showing :: 0.9025874063372612
+all functional capabilities (sample management; test :: 0.9576729277394852
+management; module management; instrument :: 0.9307213170187814
+intergration and workflow management) - :: 0.9414718717336654
+Compulsory to be supplied at tendering stage :: 0.9486288375324673
+3.3.4 :: 0.5915353099505106
+Network Switch (if dedicated LIMS network :: 0.9427932387306577
+ segment required). :: 0.9004657328128814
+4. INSTALLATION & COMMISSIONING :: 0.9285068567842245
+4.1 :: 0.7246492505073547
+Site Preparation :: 0.8662227322073544
+4.1.1 :: 0.7410557965437571
+The Vendor must conduct a site survey to verify :: 0.9079094032446543
+network points and power availability. :: 0.9078490978632218
+4.1.2 :: 0.8207065065701803
+Installation :: 0.9224443389819219
+4.1.2 :: 0.7725580334663391
+Installation of Server OS, Database, and LIMS :: 0.9148967395658079
+Application. Configuration of connectivity to more :: 0.9256643945095586
+than 25 major laboratory instruments (list to be :: 0.930934477825554
+provided during tender stage). :: 0.9121586699639598
+4.2 :: 0.6924397945404053
+Data Migration :: 0.9175756494204204
+4.2.1 :: 0.7765233814716339
+Migration of existing historical data (Excel :: 0.9518188873926798
+spreadsheets) into the new LIMS database for trend :: 0.901267491719302
+continuity (minimum 2 years of historical data). :: 0.9248879710022284
+4.3 :: 0.7460726648569107
+Commissioning :: 0.9111164169652122
+4.3.1 :: 0.772708535194397
+Functional Acceptance Testing (FAT) to be :: 0.9190338594572884
+conducted at Vendor's premises. :: 0.916527820751071
+4.3.2 :: 0.8061909079551697
+Site Acceptance Testing (SAT) to verify integration :: 0.929092078254773
+and reporting capabilities at Hwange Power Station. :: 0.9376538499043539
+5. TRAINING REQUIREMENTS :: 0.91712477684021
+5.1 :: 0.6910733729600906
+ The Vendor shall provide comprehensive training :: 0.8943339221331538
+for different user groups: :: 0.9040727681583829
+Page 19 of 29 :: 0.8707903793879918
+---
+PAGE 7
+BIDDING :: 0.8295267522335052
+FOR :: 0.7496536076068878
+THE :: 0.7439777106046677
+SUPPLY, :: 0.8251640200614929
+INSTALLATION :: 0.8933474375651433
+DOCUMENT :: 0.8791516555680169
+AND :: 0.7455839067697525
+COMMISSIONING OF LABORATORY INFORMATION MANAGEMENT SYSTEM :: 0.8866482654522205
+ATHWANGEPOWERSTATION :: 0.9221122860908508
+PROCUREMENTREFERENCENO:ZPC/HO/DOM105/2026 :: 0.9162319245792571
+PART2:STATEMENTOFREQUIREMENTS :: 0.9025781432787577
+Training :: 0.8885011408064101
+Target :: 0.8569101861545018
+Duration :: 0.8673612078030905
+Content :: 0.8692594990134239
+Group :: 0.8325965603192648
+Audience :: 0.8884487019644843
+Head :: 0.7998690485954285
+System :: 0.8112307361194065
+5 Days + :: 0.8114537000656128
+System :: 0.8363521439688546
+Admin :: 0.6840311388174692
+Chem, :: 0.8280489643414816
+Configuration, :: 0.8647114753723144
+Station :: 0.8716898187994957
+User :: 0.7324502110481262
+Chemist, IT :: 0.8815578073263168
+management, :: 0.779120147228241
+Dept :: 0.799741792678833
+backup/restore, :: 0.9001503698527813
+instrument :: 0.8948085145516829
+interface :: 0.8879514455795288
+configuration :: 0.9112777497087207
+Laboratory :: 0.9008945551785555
+Power Users :: 0.861083984375
+3 Days + :: 0.8231670525338914
+Sample :: 0.856235921382904
+Supervisors :: 0.8951848347981771
+registration, :: 0.8753694040434701
+result approval, :: 0.8146800626726711
+complex :: 0.8218421414494514
+reporting, :: 0.8198413198644464
+troubleshooting :: 0.930923979729414
+Laboratory :: 0.8719911846247587
+End Users :: 0.8793345928192139
+2 Days + :: 0.8044459687338935
+Sample Login, :: 0.8332943447998592
+Technicians :: 0.8874215086301168
+data entry, :: 0.9043672829866409
+barcode :: 0.8424092903733253
+printing, :: 0.8446803331375122
+viewing results :: 0.8606351092457771
+ Plant :: 0.7364576203482491
+0.5 Days :: 0.8741744558016459
+Management :: 0.8810969428582625
+Accessing :: 0.823631638288498
+Managers, :: 0.8717710196971893
++6 :: 0.6637762387593588
+reports, :: 0.8880835572878519
+Engineers :: 0.8959676325321198
+dashboards and :: 0.8371679127216339
+exporting data :: 0.9009117444356283
+5.2 Training materials (User Manuals and Quick Reference :: 0.8797999223073324
+Guides) must be provided in hard copy and digital :: 0.9308582711219787
+formats :: 0.8044883534312248
+6.0 MAINTENANCE & SUPPORT :: 0.8919411874734439
+Warranty :: 0.887358672089047
+6.1.1 The system shall carry a “12-month warranty" from :: 0.8848813522074904
+the date of Site Acceptance Test (SAT). :: 0.9007331445813179
+6.1.2Warranty shall cover software bugs, hardware :: 0.8969962966442108
+failures, and patch updates. :: 0.8676094083950437
+Annual Maintenance Contract (AMC) :: 0.8986489895512076
+6.2.1 :: 0.6805325945218405
+After the warranty period, a renewable Annual :: 0.9653229868930319
+Maintenance Contract is required for a minimum :: 0.8938463000541038
+period of 5 years. :: 0.8875046748864023
+6.2.2 :: 0.832862377166748
+SLA Requirements: :: 0.8478986554675632
+Page 20 of 29 :: 0.8759008858885083
+---
+PAGE 8
+FOR :: 0.7496318519115448
+THE :: 0.7495822608470917
+BIDDING :: 0.8393046483397484
+DOCUMENT :: 0.8305937581592135
+SUPPLY, :: 0.7636809647083282
+INSTALLATION :: 0.879104495048523
+AND :: 0.7403035759925842
+COMMISSIONING OF LABORATORY INFORMATION MANAGEMENT SYSTEM :: 0.9075476722470646
+AT HWANGE POWER STATION :: 0.8790688042839369
+PROCUREMENT REFERENCE NO: ZPC/HO/DOM 105/2026 :: 0.8989968481271163
+PART2: STATEMENT OFREQUIREMENTS :: 0.9076818469911814
+Critical Issues (System Down): :: 0.9317339024236125
+Response time < 4 hours; Resolution time < :: 0.9186043974965118
+8 hours. :: 0.8336923917134603
+Major Issues (Feature not working): :: 0.9174523005882899
+Response time < 8 hours. :: 0.9134060978889466
+Minor Issues (Cosmetic): :: 0.9408835697174073
+Response time :: 0.9088114712919507
+< 48 hours. :: 0.8997088621060053
+Remote Support: :: 0.9172575585544109
+Secure remote :: 0.8811722482953753
+diagnostic access must be available. :: 0.9087384874756271
+Updates: :: 0.8845705257521735
+Provision for :: 0.8442998017583575
+major version upgrades and regulatory patches. :: 0.9454007605288891
+7.0 VENDOR QUALIFICATION :: 0.8208796358108521
+7.1 :: 0.6046494096517563
+The Vendor must demonstrate: :: 0.8834861691655784
+7.1.1 :: 0.8294821381568909
+Experience in implementing LIMS in Power :: 0.9408288220079933
+Generation or Heavy Industry (Minimum 3 :: 0.9408746808767319
+reference sites). :: 0.9194199277295007
+7.1.2 :: 0.8091935217380524
+Technical capability to integrate with industrial :: 0.9244379591941834
+control systems (DCS/SCADA). :: 0.9275862862323893
+7.1.3 :: 0.770748108625412
+Local presence or authorized partner within :: 0.9085221155123278
+Zimbabwe or the SADC region for rapid on-site :: 0.9007680053296296
+support. :: 0.8050278888808357
+The detailed technical evaluation will examine the technical specification of the items offered in column :: 0.959819681239578
+c and determine whether this meets the minimum specification in column b. Bidders must complete :: 0.9507433467855056
+provided in column c. Simple statements such as e.g. Comply or Complaint will not be accepted :: 0.9385806518666288
+unless supported by relevant technical literature. :: 0.9044074825212067
+Page 21 of 29 :: 0.8705383624349322
+---
