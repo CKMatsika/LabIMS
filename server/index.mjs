@@ -12,8 +12,8 @@ import { fileURLToPath } from 'node:url'
 
 const { Pool } = pg
 const app = express()
-const port = Number(process.env.API_PORT ?? 3001)
-const host = process.env.API_HOST ?? '127.0.0.1'
+const port = Number(process.env.PORT ?? process.env.API_PORT ?? 3001)
+const host = process.env.API_HOST ?? (process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1')
 const jwtSecret = process.env.JWT_SECRET || randomBytes(32).toString('hex')
 const production = process.env.NODE_ENV === 'production'
 const directory = path.dirname(fileURLToPath(import.meta.url))
