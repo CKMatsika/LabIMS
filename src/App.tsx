@@ -68,9 +68,20 @@ type ComplianceData = {
   exceptions: { sample_code: string; location: string; method_name: string; parameter: string; numeric_value: number; unit: string; lower_limit: number | null; upper_limit: number | null; tested_at: string }[]
   signatures: { sample_id: number; sample_code: string; action: string; meaning: string; reason: string; signed_at: string; signer: string }[]
 }
+type ComplianceReadiness = {
+  status: 'Ready' | 'At Risk' | 'Blocked'
+  checks: { id: string; label: string; ok: boolean; value: string }[]
+  checklist: { id: string; requirement: string; status: 'pass' | 'warning' | 'fail'; detail: string }[]
+}
 
 const navigation: Page[] = ['Overview', 'Sample Registry', 'Test Methods', 'Instrument Interface', 'Compliance', 'Reports', 'User Management']
 const modules = ['Water Chemistry', 'Coal / Combustion', 'Oil & Fuel', 'Gas Analysis', 'Reporting & Dashboards', 'ERP / DCS Integration']
+const sampleTemplates = [
+  { id: 'boiler-feedwater', label: 'Boiler Feedwater Routine', methodName: 'Boiler Feedwater', location: 'Unit 2 Boiler Feedwater', material: 'Boiler Feedwater', chemist: 'N. Moyo', notes: 'Routine chemistry check for boiler feedwater. Monitor conductivity, silica and dissolved oxygen.' },
+  { id: 'coal-intake', label: 'Coal Intake Check', methodName: 'Coal Proximate Analysis', location: 'Coal Yard Intake', material: 'Coal', chemist: 'T. Ncube', notes: 'Incoming coal quality verification. Check moisture, ash and volatile matter.' },
+  { id: 'transformer-oil', label: 'Transformer Oil DGA', methodName: 'Transformer Oil DGA', location: 'Transformer Bay 3', material: 'Transformer Oil', chemist: 'S. Chuma', notes: 'Dissolved gas analysis for transformer oil integrity monitoring.' },
+  { id: 'hydrogen-purity', label: 'Hydrogen Purity Check', methodName: 'Hydrogen Purity', location: 'Hydrogen Plant', material: 'Hydrogen', chemist: 'R. Banda', notes: 'Gas purity and dew-point verification for the hydrogen plant.' }
+] as const
 const statusTone: Record<Status, string> = {
   Received: 'received',
   'In Progress': 'progress',
@@ -136,6 +147,7 @@ export default function App() {
   const [readings, setReadings] = useState<InstrumentReading[]>([])
   const [connectors, setConnectors] = useState<Connector[]>([])
   const [compliance, setCompliance] = useState<ComplianceData>({ audit: [], exceptions: [], signatures: [] })
+  const [complianceReadiness, setComplianceReadiness] = useState<ComplianceReadiness | null>(null)
   const [notice, setNotice] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
@@ -150,6 +162,7 @@ export default function App() {
   const [trendParameterId, setTrendParameterId] = useState('')
   const [trendPoints, setTrendPoints] = useState<TrendPoint[]>([])
   const [authForm, setAuthForm] = useState({ fullName: '', email: '', password: '' })
+  const [sampleTemplateId, setSampleTemplateId] = useState('')
   const [sampleForm, setSampleForm] = useState({ sampleCode: '', location: '', material: '', methodId: '', collectedAt: todayInput(), dueAt: '', chemist: '', notes: '' })
   const [resultForm, setResultForm] = useState<Record<number, string>>({})
   const [signForm, setSignForm] = useState({ action: 'Approved', reason: '', password: '' })
@@ -177,12 +190,13 @@ export default function App() {
   }, [])
 
   const loadWorkspace = useCallback(async () => {
-    const [dashboardResponse, sampleResponse, methodResponse, instrumentResponse, complianceResponse] = await Promise.all([
+    const [dashboardResponse, sampleResponse, methodResponse, instrumentResponse, complianceResponse, readinessResponse] = await Promise.all([
       api<Dashboard>('/dashboard'),
       api<{ samples: Sample[] }>('/samples'),
       api<{ methods: Method[] }>('/methods'),
       api<{ instruments: Instrument[]; connectors: Connector[]; readings: InstrumentReading[] }>('/instruments'),
-      api<ComplianceData>('/compliance')
+      api<ComplianceData>('/compliance'),
+      api<ComplianceReadiness>('/compliance/readiness')
     ])
     setDashboard(dashboardResponse)
     setSamples(sampleResponse.samples)
@@ -190,6 +204,7 @@ export default function App() {
     setInstruments(instrumentResponse.instruments)
     setReadings(instrumentResponse.readings)
     setCompliance(complianceResponse)
+    setComplianceReadiness(readinessResponse)
     setConnectors(instrumentResponse.connectors)
     setConnectorForms(Object.fromEntries(instrumentResponse.connectors.map((connector) => [
       connector.connector_type,
@@ -249,6 +264,24 @@ export default function App() {
     }
   }
 
+  const applySampleTemplate = (templateId: string) => {
+    const template = sampleTemplates.find((item) => item.id === templateId)
+    if (!template) {
+      setSampleTemplateId('')
+      return
+    }
+    setSampleTemplateId(templateId)
+    const method = methods.find((item) => item.name === template.methodName)
+    setSampleForm((current) => ({
+      ...current,
+      location: template.location,
+      material: template.material,
+      methodId: method ? String(method.id) : current.methodId,
+      chemist: template.chemist,
+      notes: template.notes
+    }))
+  }
+
   const logout = () => {
     localStorage.removeItem('labims-token')
     localStorage.removeItem('labims-user')
@@ -287,6 +320,7 @@ export default function App() {
     void run(async () => {
       await api('/samples', { method: 'POST', body: JSON.stringify(sampleForm) })
       setShowNewSample(false)
+      setSampleTemplateId('')
       setSampleForm({ sampleCode: '', location: '', material: '', methodId: '', collectedAt: todayInput(), dueAt: '', chemist: '', notes: '' })
       await refresh()
     }, 'Sample registered and added to the custody log.')
@@ -374,6 +408,13 @@ export default function App() {
     }, 'Instrument reading recorded.')
   }
 
+  const autoCaptureReading = async (instrumentId: number) => {
+    await run(async () => {
+      await api(`/instruments/${instrumentId}/autocapture`, { method: 'POST' })
+      await refresh()
+    }, 'Live auto-capture completed for the instrument.')
+  }
+
   const saveConnector = (connector: Connector) => {
     const values = connectorForms[connector.connector_type]
     if (!values) return
@@ -423,6 +464,18 @@ export default function App() {
       anchor.click()
       URL.revokeObjectURL(url)
     }, 'CSV report downloaded.')
+  }
+
+  const downloadRegulatoryDossier = () => {
+    void run(async () => {
+      const dossier = await api<string>('/reports/regulatory.txt')
+      const url = URL.createObjectURL(new Blob([dossier], { type: 'text/plain;charset=utf-8' }))
+      const anchor = document.createElement('a')
+      anchor.href = url
+      anchor.download = `labims-regulatory-dossier-${new Date().toISOString().slice(0, 10)}.txt`
+      anchor.click()
+      URL.revokeObjectURL(url)
+    }, 'Regulatory dossier exported.')
   }
 
   const trendParameters = useMemo(() => methods.flatMap((method) => method.parameters.map((parameter) => ({
@@ -579,7 +632,10 @@ export default function App() {
             <div className="panel integration-note"><span className="integration-icon">⌁</span><div><strong>Hardware connection status is reported honestly</strong><p className="muted">A configured instrument is not marked connected until a verified driver or station adapter reports data.</p></div></div>
             <div className="instrument-grid">{instruments.length ? instruments.map((instrument) => <article className="panel instrument-card" key={instrument.id}>
               <div className="instrument-icon">⚗</div><div className="instrument-info"><h4>{instrument.name}</h4><p>{instrument.module} · {instrument.protocol}</p><small>{instrument.endpoint || 'Endpoint not set'}</small></div>
-              <span className={`status-pill ${instrument.status === 'Connected' ? 'approved' : 'received'}`}>{instrument.status}</span>
+              <div className="instrument-actions">
+                <span className={`status-pill ${instrument.status === 'Connected' ? 'approved' : 'received'}`}>{instrument.status}</span>
+                {['Lab Technician', 'Station Chemist'].includes(user.role) && <button className="secondary-btn compact" onClick={() => void autoCaptureReading(instrument.id)} disabled={busy}>Auto-capture</button>}
+              </div>
               <small className="instrument-last">Last reading {formatDate(instrument.last_reading, true)}</small>
             </article>) : <EmptyState title="No instruments configured" text="Add an instrument record to start mapping the station's analyzers." />}</div>
             {['Lab Technician', 'Station Chemist'].includes(user.role) && <section className="panel subpanel">
@@ -609,6 +665,30 @@ export default function App() {
               <button className="secondary-btn" onClick={verifyAudit}>⟳ Verify audit integrity</button>
             </div>
             {auditIntegrity !== null && <div className={`integrity-banner ${auditIntegrity ? 'good' : 'bad'}`}>{auditIntegrity ? '✓ Hash chain verified. No changes detected.' : '⚠ Integrity verification failed. Review the audit entries immediately.'}</div>}
+            {complianceReadiness && <div className="panel readiness-panel">
+              <div className="readiness-header">
+                <div>
+                  <p className="card-label">Regulatory readiness</p>
+                  <h3>{complianceReadiness.status}</h3>
+                </div>
+                <span className={`status-pill ${complianceReadiness.status === 'Ready' ? 'approved' : complianceReadiness.status === 'At Risk' ? 'progress' : 'rejected'}`}>{complianceReadiness.status}</span>
+              </div>
+              <div className="readiness-grid">
+                {complianceReadiness.checks.map((check) => <div key={check.id} className={`check-item ${check.ok ? 'ok' : 'warn'}`}>
+                  <strong>{check.label}</strong>
+                  <span>{check.value}</span>
+                </div>)}
+              </div>
+              <div className="readiness-checklist">
+                {complianceReadiness.checklist.map((item) => <div key={item.id} className={`checklist-row ${item.status}`}>
+                  <span className="requirement-tag">{item.requirement}</span>
+                  <div>
+                    <strong>{item.status === 'pass' ? 'Pass' : item.status === 'warning' ? 'Needs confirmation' : 'Fail'}</strong>
+                    <p>{item.detail}</p>
+                  </div>
+                </div>)}
+              </div>
+            </div>}
             <div className="compliance-kpis"><div className="panel mini-kpi"><span>Out-of-limit results</span><strong>{compliance.exceptions.length}</strong></div><div className="panel mini-kpi"><span>Electronic signatures</span><strong>{compliance.signatures.length}</strong></div><div className="panel mini-kpi"><span>Audit events (latest 100)</span><strong>{compliance.audit.length}</strong></div></div>
             <div className="panel subpanel">
               <div className="panel-header"><div><h3>Limit exceptions</h3><p className="muted">Results compared with the configured method limits.</p></div></div>
@@ -631,6 +711,7 @@ export default function App() {
             <div className="report-grid">
               <article className="panel report-card"><span className="report-icon">▤</span><h4>Sample and results register</h4><p>Sample IDs, collection locations, material, methods, workflow status, results and specification limits.</p><button className="secondary-btn" onClick={downloadReport}>Download CSV</button></article>
               <article className="panel report-card"><span className="report-icon">✓</span><h4>Certificate of analysis</h4><p>Approved sample results and electronic sign-off are accessible from each sample's detail and custody record.</p><button className="secondary-btn" onClick={() => setPage('Sample Registry')}>Open sample registry</button></article>
+              <article className="panel report-card"><span className="report-icon">▣</span><h4>Regulatory dossier</h4><p>Export a text dossier covering readiness checks, tender requirements, controls and operational validation notes.</p><button className="secondary-btn" onClick={downloadRegulatoryDossier}>Export dossier</button></article>
             </div>
             <div className="panel subpanel"><div className="panel-header"><div><h3>Report snapshot</h3><p className="muted">Live counts from the relational database.</p></div></div>
               <div className="report-stats"><div><strong>{dashboard?.totalSamples ?? 0}</strong><span>Total samples</span></div><div><strong>{dashboard?.activeSamples ?? 0}</strong><span>Active samples</span></div><div><strong>{dashboard?.coaIssued ?? 0}</strong><span>Approved this month</span></div><div><strong>{dashboard?.rejectedSamples ?? 0}</strong><span>Rejected samples</span></div></div>
@@ -656,8 +737,12 @@ export default function App() {
 
       {showNewSample && <Modal title="Register a sample" onClose={() => setShowNewSample(false)}>
         <form className="form-grid" onSubmit={createSample}>
+          <label>Sample template<select value={sampleTemplateId} onChange={(event) => applySampleTemplate(event.target.value)}><option value="">Custom sample</option>{sampleTemplates.map((template) => <option key={template.id} value={template.id}>{template.label}</option>)}</select></label>
           <label>Sample ID / barcode<input value={sampleForm.sampleCode} onChange={(event) => setSampleForm({ ...sampleForm, sampleCode: event.target.value })} placeholder="Leave blank to generate an ID" /></label>
-          <label>Test method / template<select required value={sampleForm.methodId} onChange={(event) => setSampleForm({ ...sampleForm, methodId: event.target.value })}><option value="">Select a method</option>{methods.map((method) => <option key={method.id} value={method.id}>{method.name} · {method.module}</option>)}</select></label>
+          <label>Test method / template<select required value={sampleForm.methodId} onChange={(event) => {
+            setSampleForm({ ...sampleForm, methodId: event.target.value })
+            setSampleTemplateId('')
+          }}><option value="">Select a method</option>{methods.map((method) => <option key={method.id} value={method.id}>{method.name} · {method.module}</option>)}</select></label>
           <label>Sample location<input required value={sampleForm.location} onChange={(event) => setSampleForm({ ...sampleForm, location: event.target.value })} placeholder="Unit 2 Boiler Feedwater" /></label>
           <label>Material<input value={sampleForm.material} onChange={(event) => setSampleForm({ ...sampleForm, material: event.target.value })} placeholder="Water, coal, oil…" /></label>
           <label>Collected at<input type="datetime-local" value={sampleForm.collectedAt} onChange={(event) => setSampleForm({ ...sampleForm, collectedAt: event.target.value })} /></label>

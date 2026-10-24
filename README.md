@@ -27,8 +27,9 @@ Free services can sleep or scale to zero, so expect delays on the first request 
 
 ## Included workflows
 
-- Sample registration, barcode/sample ID lookup, custody history, status tracking, and method templates.
+- Sample registration, barcode/sample ID lookup, custody history, status tracking, routine sample templates, and method templates.
 - Configurable test methods and parameters with numerical limits and precision.
+- Simulated direct instrument auto-capture for configured analyzers, with protocol status reporting and live data capture for demo station integration.
 - Result entry, limit flags, supervisor/chemist electronic sign-off, and signed sample history.
 - Dashboard aggregates, compliance exceptions, parameter histories, and a CSV report export.
 - User provisioning for Lab Technician, Lab Supervisor, Station Chemist, and Plant Management roles.

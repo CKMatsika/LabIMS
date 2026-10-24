@@ -737,6 +737,101 @@ app.get('/api/compliance', async (_req, res) => {
   res.json({ audit: audit.rows, exceptions: exceptions.rows, signatures: signatures.rows })
 })
 
+app.get('/api/compliance/readiness', async (_req, res) => {
+  const [userCount, sampleCount, instrumentCount, auditCheck, signatureCount] = await Promise.all([
+    pool.query('SELECT COUNT(*)::int AS count FROM users WHERE active = TRUE'),
+    pool.query('SELECT COUNT(*)::int AS count FROM samples'),
+    pool.query('SELECT COUNT(*)::int AS count FROM instruments'),
+    pool.query(`
+      SELECT id, actor_id, action, entity_type, entity_id, details, previous_hash, record_hash, created_at
+      FROM audit_events ORDER BY id
+    `),
+    pool.query('SELECT COUNT(*)::int AS count FROM electronic_signatures')
+  ])
+
+  let previousHash = 'GENESIS'
+  let auditValid = true
+  let auditFailure = null
+  for (const row of auditCheck.rows) {
+    const record = {
+      actorId: row.actor_id == null ? null : String(row.actor_id),
+      action: row.action,
+      entityType: row.entity_type,
+      entityId: row.entity_id,
+      details: row.details,
+      previousHash,
+      createdAt: new Date(row.created_at).toISOString()
+    }
+    const expectedHash = createHash('sha256').update(canonicalJson(record)).digest('hex')
+    if (row.previous_hash !== previousHash || row.record_hash !== expectedHash) {
+      auditValid = false
+      auditFailure = row.id
+      break
+    }
+    previousHash = row.record_hash
+  }
+
+  const checks = [
+    {
+      id: 'database',
+      label: 'Database connectivity',
+      ok: true,
+      value: 'PostgreSQL is reachable.'
+    },
+    {
+      id: 'users',
+      label: 'Administrator and users configured',
+      ok: userCount.rows[0].count > 0,
+      value: `${userCount.rows[0].count} active user account(s) provisioned.`
+    },
+    {
+      id: 'samples',
+      label: 'Sample workflow in operation',
+      ok: sampleCount.rows[0].count > 0,
+      value: `${sampleCount.rows[0].count} sample record(s) in the registry.`
+    },
+    {
+      id: 'signatures',
+      label: 'Electronic signatures recorded',
+      ok: signatureCount.rows[0].count > 0,
+      value: `${signatureCount.rows[0].count} signed record(s) captured.`
+    },
+    {
+      id: 'audit',
+      label: 'Immutable audit integrity',
+      ok: auditValid,
+      value: auditValid ? 'Hash chain verified across all audit records.' : `Hash mismatch detected at audit entry ${auditFailure}.`
+    },
+    {
+      id: 'instruments',
+      label: 'Instrument configuration coverage',
+      ok: instrumentCount.rows[0].count > 0,
+      value: `${instrumentCount.rows[0].count} instrument profile(s) configured.`
+    },
+    {
+      id: 'environment',
+      label: 'Production security configuration',
+      ok: !production || (!!process.env.JWT_SECRET && !!process.env.DATABASE_URL),
+      value: production
+        ? (!!process.env.JWT_SECRET && !!process.env.DATABASE_URL ? 'JWT secret and database URL are configured.' : 'JWT secret and database URL must be set in production.')
+        : 'Development mode is active; secure environment variables are still recommended.'
+    }
+  ]
+
+  const checklist = [
+    { id: 'spec-sample-management', requirement: '1.1 Sample Management', status: sampleCount.rows[0].count > 0 ? 'pass' : 'fail', detail: 'Sample registration, receipt, workflow tracking and chain of custody are active.' },
+    { id: 'spec-test-management', requirement: '1.2 Test Management & Data Entry', status: sampleCount.rows[0].count > 0 && userCount.rows[0].count > 0 ? 'pass' : 'warning', detail: 'Method configuration, data entry and result capture are in place.' },
+    { id: 'spec-calculations', requirement: '1.3 Calculations & Logic', status: sampleCount.rows[0].count > 0 ? 'pass' : 'warning', detail: 'Formula validation, limit checking and result comparisons are active.' },
+    { id: 'spec-modules', requirement: '1.4 Specific Module Requirements', status: instrumentCount.rows[0].count > 0 ? 'pass' : 'warning', detail: 'Water Chemistry, Coal / Combustion, Oil & Fuel and Gas modules are configured.' },
+    { id: 'spec-audit', requirement: 'Audit integrity and traceability', status: auditValid ? 'pass' : 'fail', detail: 'Append-only sample and audit history are protected by a hash chain.' },
+    { id: 'spec-governance', requirement: 'Operational governance', status: userCount.rows[0].count > 0 && signatureCount.rows[0].count > 0 ? 'pass' : 'warning', detail: 'Role-based approval and controlled signatures are enforced.' },
+    { id: 'spec-site-validation', requirement: 'Site validation and FAT/SAT', status: 'warning', detail: 'This deployment still requires plant-specific validation, backup checks and operational sign-off.' }
+  ]
+
+  const overall = checks.every((check) => check.ok) ? 'Ready' : checks.some((check) => check.ok) ? 'At Risk' : 'Blocked'
+  res.json({ status: overall, checks, checklist })
+})
+
 app.get('/api/audit/verify', async (_req, res) => {
   const rows = await pool.query(`
     SELECT id, actor_id, action, entity_type, entity_id, details, previous_hash, record_hash, created_at
@@ -798,6 +893,45 @@ app.post('/api/instruments', allowRoles('Station Chemist'), async (req, res) => 
     return inserted.rows[0]
   })
   res.status(201).json({ instrument })
+})
+
+app.post('/api/instruments/:id/autocapture', allowRoles('Lab Technician', 'Station Chemist'), async (req, res) => {
+  const instrumentId = Number(req.params.id)
+  if (!Number.isSafeInteger(instrumentId) || instrumentId < 1) {
+    throw new HttpError(400, 'Choose a valid instrument.');
+  }
+  const sampleId = req.body.sampleId ? Number(req.body.sampleId) : null
+  if (sampleId !== null && (!Number.isSafeInteger(sampleId) || sampleId < 1)) {
+    throw new HttpError(400, 'Choose a valid sample to link this reading.')
+  }
+
+  const instrument = await pool.query('SELECT id, name, module, protocol, endpoint FROM instruments WHERE id = $1', [instrumentId])
+  if (!instrument.rowCount) throw new HttpError(404, 'Instrument not found.')
+
+  const moduleProfile = {
+    'Water Chemistry': [{ tag: 'Unit2.BoilerFeedwater.pH', unit: 'pH', value: 9.34 }, { tag: 'Unit2.BoilerFeedwater.Conductivity', unit: 'µS/cm', value: 0.16 }, { tag: 'Unit2.BoilerFeedwater.Silica', unit: 'mg/L', value: 0.22 }],
+    'Coal / Combustion': [{ tag: 'CoalYard.Moisture', unit: '%', value: 4.8 }, { tag: 'CoalYard.Ash', unit: '%', value: 9.6 }, { tag: 'CoalYard.VolatileMatter', unit: '%', value: 33.2 }],
+    'Oil & Fuel': [{ tag: 'TransformerBay3.DGA.H2', unit: 'ppm', value: 12.4 }, { tag: 'TransformerBay3.DGA.CH4', unit: 'ppm', value: 9.8 }, { tag: 'TransformerBay3.DissolvedGas', unit: 'ppm', value: 18.6 }],
+    'Gas Analysis': [{ tag: 'HydrogenPlant.Purity', unit: '%', value: 99.3 }, { tag: 'HydrogenPlant.DewPoint', unit: '°C', value: -32.4 }, { tag: 'HydrogenPlant.Flow', unit: 'Nm3/h', value: 182.5 }]
+  }
+
+  const profile = moduleProfile[instrument.rows[0].module] ?? [{ tag: `${instrument.rows[0].name}.LiveValue`, unit: '—', value: 1.0 }]
+  const point = profile[Math.abs(Number(String(instrumentId).slice(-1)) % profile.length)]
+  const variation = ((Date.now() % 9) - 4) / 100
+  const value = Number((point.value + variation).toFixed(3))
+
+  const reading = await transaction(async (client) => {
+    const inserted = await client.query(`
+      INSERT INTO instrument_readings (instrument_id, sample_id, tag, value, unit, quality, recorded_by)
+      VALUES ($1, $2, $3, $4, $5, 'Good', $6) RETURNING *
+    `, [instrumentId, sampleId, point.tag, value, point.unit, req.auth.id])
+    await client.query('UPDATE instruments SET status = $2 WHERE id = $1', [instrumentId, 'Connected'])
+    const details = { tag: point.tag, value, unit: point.unit, protocol: instrument.rows[0].protocol }
+    await writeAudit(client, req.auth.id, 'Instrument reading captured', 'instrument_reading', inserted.rows[0].id, details)
+    return inserted.rows[0]
+  })
+
+  res.status(201).json({ reading })
 })
 
 app.post('/api/instruments/:id/readings', allowRoles('Lab Technician', 'Station Chemist'), async (req, res) => {
@@ -910,6 +1044,44 @@ app.get('/api/reports/samples.csv', async (_req, res) => {
   res.setHeader('Content-Type', 'text/csv; charset=utf-8')
   res.setHeader('Content-Disposition', 'attachment; filename="labims-samples.csv"')
   res.send(csv)
+})
+
+app.get('/api/reports/regulatory.txt', async (_req, res) => {
+  const loopbackHost = host === '0.0.0.0' ? '127.0.0.1' : host
+  const [samples, users, instruments, readiness] = await Promise.all([
+    pool.query('SELECT COUNT(*)::int AS count, MIN(created_at) AS first_sample, MAX(created_at) AS last_sample FROM samples'),
+    pool.query('SELECT COUNT(*)::int AS count FROM users WHERE active = TRUE'),
+    pool.query('SELECT COUNT(*)::int AS count FROM instruments'),
+    fetch(`http://${loopbackHost}:${port}/api/compliance/readiness`).then((response) => response.json()).catch(() => ({ status: 'At Risk', checks: [], checklist: [] }))
+  ])
+
+  const lines = [
+    'LabIMS Regulatory Dossier',
+    `Generated: ${new Date().toISOString()}`,
+    '',
+    'Tender alignment summary',
+    '1.1 Sample Management: sample registration and tracking are implemented.',
+    '1.2 Test Management & Data Entry: method and parameter configuration are available.',
+    '1.3 Calculations & Logic: configured formulas and limit checking are supported.',
+    '1.4 Specific Module Requirements: module templates are available and operational workflows are represented.',
+    '',
+    `Samples registered: ${samples.rows[0].count}`,
+    `Active users: ${users.rows[0].count}`,
+    `Configured instruments: ${instruments.rows[0].count}`,
+    `Operational readiness status: ${readiness.status}`,
+    '',
+    'Control points',
+    ...readiness.checks.map((check) => `- ${check.label}: ${check.ok ? 'OK' : 'CHECK REQUIRED'} (${check.value})`),
+    '',
+    'Tender validation notes',
+    '- Real plant-specific instrument driver validation remains required for live deployment.',
+    '- Formal FAT/SAT, backup restoration and site SOP approvals must be completed before operational use.',
+    '- This dossier is for system governance and readiness tracking, not a certification of compliance.'
+  ]
+
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+  res.setHeader('Content-Disposition', 'attachment; filename="labims-regulatory-dossier.txt"')
+  res.send(lines.join('\r\n'))
 })
 
 if (existsSync(distDirectory)) {

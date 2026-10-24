@@ -120,6 +120,23 @@ a { color: inherit; }
 .kpi-card em.warning { color: #ffd86b; }
 .content-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr); gap: 15px; margin-bottom: 16px; }
 .panel { padding: 18px; }
+.readiness-panel { margin-bottom: 18px; }
+.readiness-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; }
+.readiness-header h3 { margin: 0; font-size: 20px; }
+.readiness-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.check-item { display: flex; flex-direction: column; gap: 3px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(121, 160, 195, 0.18); background: rgba(16, 43, 59, 0.52); }
+.check-item strong { font-size: 11px; color: #e4f4ff; }
+.check-item span { font-size: 10px; color: #b0c8d9; }
+.check-item.ok { border-color: rgba(83, 232, 168, 0.25); background: rgba(26, 85, 57, 0.2); }
+.check-item.warn { border-color: rgba(255, 195, 76, 0.26); background: rgba(84, 61, 12, 0.18); }
+.readiness-checklist { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 16px; }
+.checklist-row { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(144, 178, 208, 0.15); background: rgba(12, 32, 44, 0.62); }
+.checklist-row.pass { border-color: rgba(117, 244, 180, 0.18); }
+.checklist-row.warning { border-color: rgba(255, 196, 87, 0.16); }
+.checklist-row.fail { border-color: rgba(255, 138, 138, 0.18); }
+.requirement-tag { display: inline-flex; align-items: center; font-size: 9px; font-weight: 700; color: #9feed4; background: rgba(96, 177, 155, 0.1); border-radius: 999px; padding: 4px 7px; white-space: nowrap; }
+.checklist-row strong { display: block; margin-bottom: 3px; font-size: 11px; }
+.checklist-row p { margin: 0; font-size: 10px; color: #a7bfd1; }
 .panel-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
 .panel-header h3, .subpanel h3, .role-panel h3 { font-size: 15px; letter-spacing: -0.025em; }
 .muted { color: var(--muted); }
